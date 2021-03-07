@@ -22,6 +22,24 @@
 [data-card-type='6'] {
 	background: url('/img/dog-6.jpg') no-repeat center center/cover;
 }
+[data-card-type='7'] {
+	background: url('/img/dog-7.jfif') no-repeat center center/cover;
+}
+[data-card-type='8'] {
+	background: url('/img/dog-8.jpg') no-repeat center center/cover;
+}
+[data-card-type='9'] {
+	background: url('/img/dog-9.jpg') no-repeat center center/cover;
+}
+[data-card-type='10'] {
+	background: url('/img/dog-10.jpg') no-repeat center center/cover;
+}
+[data-card-type='11'] {
+	background: url('/img/dog-11.jpg') no-repeat center center/cover;
+}
+[data-card-type='12'] {
+	background: url('/img/dog-12.jpg') no-repeat center center/cover;
+}
 #main {
 	display: none;
 	flex-direction: column;
@@ -42,6 +60,7 @@
 .card {
 	background: url('https://banner2.cleanpng.com/20180715/yag/kisspng-question-mark-computer-icons-exclamation-mark-desk-question-mark-emoji-5b4bb794264216.8330599815316888521567.jpg')
 		no-repeat center center/cover;
+	/* perspective: 1000px; */
 }
 #grid-container > div {
 	border: 1px solid black;
@@ -58,6 +77,10 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 #intro {
 	height: 50vh;
@@ -69,7 +92,7 @@
 	flex-direction: column;
 }
 .user-input {
-	width: 50px;
+	width: 70px;
 	height: 50px;
 	font-size: 34px;
 	padding-left: 13px;

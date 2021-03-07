@@ -7,7 +7,7 @@ const start = document.querySelector('.start')
 const userInput = document.querySelector('.user-input');
 const intro = document.querySelector('#intro');
 const mistake = document.querySelector('.mistake-counter');
-
+let gameCards;
 //! create a deck of cards from 1-n
 const cardsArray = [];
 const createCardsArray = (n) => {
@@ -18,10 +18,12 @@ const createCardsArray = (n) => {
 //! Start the game with the user's input
 start.addEventListener('click',(e)=> {
     createCardsArray(parseInt(userInput.value));
+    gameCards = userInput.value;
     shuffleArray(cardsArray);
     addCards();
     intro.style.display = 'none';
     mainGame.style.display = 'flex';
+    startStopTimer();
 })
 
 //! shuffle the cards
@@ -67,6 +69,7 @@ const flipCard = (e) => {
         counterFlipped++;
 		cache.splice(0);
         if (counterFlipped === cardsArray.length / 2) {
+            clearInterval(interval);
             finish.style.display = 'flex';
         }
 	}
@@ -92,3 +95,48 @@ let curr2;
 
 gridContainer.addEventListener('click', flipCard);
 playAgain.addEventListener('click',() => location.reload())
+
+//! Create Stopper
+let minutes = 0;
+let seconds = 0;
+let hours = 0;
+
+let displayMinutes = 0;
+let displaySeconds = 0;
+let displayHours = 00;
+
+function stopWatch() {
+	seconds++;
+	if (seconds === 60) {
+		seconds = 0;
+		minutes++;
+		if (minutes === 60) {
+			minutes = 0;
+			hours++;
+		}
+	}
+	if (seconds < 10) {
+		displaySeconds = '0' + seconds.toString();
+	} else {
+		displaySeconds = seconds;
+	}
+	if (minutes < 10) {
+		displayMinutes = '0' + minutes.toString();
+	} else {
+		displayMinutes = minutes;
+	}
+	if (minutes < 10) {
+		displayHours = '0' + hours.toString();
+	} else {
+		displayHours = hours;
+	}
+	document.querySelector(
+		'.timer'
+	).innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+}
+
+let interval = null;
+
+function startStopTimer() {
+		interval = setInterval(stopWatch, 1000);
+}
