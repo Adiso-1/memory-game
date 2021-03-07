@@ -7,6 +7,9 @@ const start = document.querySelector('.start')
 const userInput = document.querySelector('.user-input');
 const intro = document.querySelector('#intro');
 const mistake = document.querySelector('.mistake-counter');
+const userName = document.querySelector('.user-name');
+const header = document.querySelector('.header');
+
 let gameCards;
 //! create a deck of cards from 1-n
 const cardsArray = [];
@@ -17,6 +20,7 @@ const createCardsArray = (n) => {
 }
 //! Start the game with the user's input
 start.addEventListener('click',(e)=> {
+    header.textContent = `Good Luck ${userName.value}!`
     createCardsArray(parseInt(userInput.value));
     gameCards = userInput.value;
     shuffleArray(cardsArray);
@@ -42,8 +46,14 @@ const shuffleArray = (array) => {
 const addCards = () => {
     cardsArray.forEach(e => {
         const card = document.createElement('div');
+        const frontCard = document.createElement('div');
+        const backCard = document.createElement('div');
         card.classList.add('card');
-        card.setAttribute(`data-card-type`,e);
+        frontCard.classList.add('front-card')
+        backCard.classList.add('back-card')
+        backCard.setAttribute(`data-card-type`,e);
+        card.appendChild(frontCard)
+        card.appendChild(backCard)
         gridContainer.appendChild(card)
     })
 }
@@ -52,15 +62,15 @@ const addCards = () => {
 let counterFlipped = 0;
 let mistakeCounter = 0;
 const flipCard = (e) => {
-	if (e.target.className === 'card') {
+	if (e.target.className === 'front-card') {
 		if (!curr1) {
-			curr1 = e.target;
+			curr1 = e.target.nextSibling;
 			cache.push(curr1);
-			curr1.classList.remove('card');
+            curr1.parentElement.classList.add('flipped')
 		} else {
-			curr2 = e.target;
+			curr2 = e.target.nextSibling;
 			cache.push(curr2);
-			curr2.classList.remove('card');
+             curr2.parentElement.classList.add('flipped');
 		}
 	}
 	if (cache.length > 1 && curr1.dataset.cardType === curr2.dataset.cardType) {
@@ -74,11 +84,10 @@ const flipCard = (e) => {
         }
 	}
 	if (cache.length > 1 && curr1.dataset.cardType !== curr2.dataset.cardType) {
-
         gridContainer.removeEventListener('click', flipCard);
 		setTimeout(() => {
-			curr1.classList.add('card');
-			curr2.classList.add('card');
+			curr1.parentElement.classList.remove('flipped');
+			curr2.parentElement.classList.remove('flipped');
 			cache.splice(0);
 			curr1 = '';
 			curr2 = '';
